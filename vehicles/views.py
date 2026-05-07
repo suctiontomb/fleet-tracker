@@ -5,6 +5,9 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
+from datetime import date, timedelta
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class VehicleViewSet(viewsets.ModelViewSet):
     queryset = Vehicle.objects.all()
@@ -14,6 +17,14 @@ class VehicleViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['is_active']
     search_fields = ['registration_number', 'make', 'model']
+
+    @action(detail=False, methods=['get'])
+    def due_for_service(self, request):
+        today = date.today()
+        due_date = today + timedelta(days=30)
+        vehicles = Vehicle.objects.filter(next_service_due__lte=due_date)
+        serializer = VehicleSerializer(vehicles,many=True)
+        return Response(serializer.data)
 
 
 class MechanicViewSet(viewsets.ModelViewSet):
