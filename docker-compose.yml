@@ -14,8 +14,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - fleet_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U fleet_user -d fleet_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   web:
+    build: .
     command: >
       sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
@@ -25,9 +31,10 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgresql://fleet_user:fleet123@db:5432/fleet_db
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
     networks:
       - fleet_network
 
