@@ -32,8 +32,8 @@ class MaintenanceJob(models.Model):
         ('complete', 'Complete'),
     ]
 
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
-    mechanic = models.ForeignKey(Mechanic, on_delete=models.CASCADE)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.PROTECT)
+    mechanic = models.ForeignKey(Mechanic, on_delete=models.PROTECT)
     description = models.TextField()
     status = models.CharField(max_length=11, choices=STATUS_CHOICES, default= 'pending')
     scheduled_date = models.DateField()

@@ -1,7 +1,63 @@
+gitignore# ==========================================
+# Python & Django Core
+# ==========================================
 __pycache__/
-.venv/
-*.pyc
-*.env
+*.py[cod]
+*$py.class
+*.elc
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ==========================================
+# Django Specifics (Excluding Local Artifacts)
+# ==========================================
+# Keep migrations check-ins, but ignore sqlite files if using postgres/mysql
+*.sqlite3
+*.sqlite3-journal
+
+# Ignore collected static assets (Docker/Nginx should build/serve these)
+staticfiles/
+static_root/
+
+# Ignore user-uploaded media files
+media/
+media_root/
+
+# ==========================================
+# Docker & Database Containers
+# ==========================================
+# Ignore local persistent database volumes mounted by docker-compose
+.docker-volumes/
+postgres_data/
+mysql_data/
+redis_data/
+
+# Ignore Docker build/compose local cache files
+.docker/
+.compose/
+
+# ==========================================
+# Security & Environment Variables
+# ==========================================
+# NEVER commit credentials or secrets to git
 .env
-db.sqlite3
+.env.*
+!.env.template
+!.env.example
+secrets.json
+
+# ==========================================
+# Text Editors & IDEs
+# ==========================================
+.vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
