@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'vehicles',
     'rest_framework',
     'django_filters',
-    'corsheaders',
-
+    #'corsheaders',
 
 ]
 
