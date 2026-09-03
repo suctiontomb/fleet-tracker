@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django_filters',
     #'corsheaders',
     # This is going to be in conflict with you.
-
 ]
 
 MIDDLEWARE = [
