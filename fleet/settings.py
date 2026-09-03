@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     #'corsheaders',
+    # This is going to be in conflict with you.
 
 ]
 
